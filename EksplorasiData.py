@@ -9,9 +9,6 @@ data = pd.read_csv(file)
 
 #Distribusi Rating-----------------------------------------------------------
 rating_counts = data['rating'].value_counts().sort_index()
-print(rating_counts)
-
-# Membuat grafik distribusi rating
 plt.figure(figsize=(10, 6))
 rating_counts.plot(kind='bar', color='skyblue')
 plt.title('Distribusi Rating')
@@ -24,10 +21,7 @@ plt.show()
 
 
 #Rata-Rata Rating-----------------------------------------------------------
-# Menghitung rata-rata rating
 average_rating = data['rating'].mean()
-
-# Menampilkan rata-rata rating
 print(f'Rata-rata Rating: {average_rating:.2f}')
 
 
@@ -40,18 +34,12 @@ data.set_index('timestamp', inplace=True)
 
 # Mengelompokkan data berdasarkan bulan dan tahun, kemudian menghitung rata-rata rating per bulan
 monthly_ratings = data['rating'].resample('ME').mean()
-
-# Membuat grafik waktu seri
 plt.figure(figsize=(12, 6))
 plt.plot(monthly_ratings, marker='o', linestyle='-', color='b')
-
-# Menambahkan label dan judul
 plt.title('Rata-rata Rating Berdasarkan Waktu')
 plt.xlabel('Waktu')
 plt.ylabel('Rata-rata Rating')
 plt.grid(True)
-
-# Menampilkan grafik
 plt.show()
 
 
@@ -61,7 +49,7 @@ wordcloud = WordCloud(width=800, height=400, background_color='white').generate(
 plt.figure(figsize=(12, 6))
 plt.imshow(wordcloud, interpolation='bilinear')
 plt.axis('off')
-plt.title('Judul Review Yang Sering Muncul')
+plt.title('Teks Dari Judul Review Yang Sering Muncul')
 plt.show()
 
 
@@ -89,27 +77,6 @@ plt.show()
 
 
 
-#Frekuensi Kode Produk Yang Muncul-----------------------------------------------
-plt.figure(figsize=(12, 6))
-data['asin'].value_counts().head(10).plot(kind='bar', color='salmon')
-plt.title('10 ASIN Teratas berdasarkan Jumlah Ulasan')
-plt.xlabel('ASIN')
-plt.ylabel('Jumlah Ulasan')
-plt.xticks(rotation=90)
-plt.grid(axis='y', linestyle='--', alpha=0.7)
-plt.show()
-
-
-#Frekuensi Ulasan User----------------------------------------------------------
-plt.figure(figsize=(12, 6))
-data['user_id'].value_counts().head(10).plot(kind='bar', color='orange')
-plt.title('10 User ID Teratas berdasarkan Jumlah Ulasan')
-plt.xlabel('User ID')
-plt.ylabel('Jumlah Ulasan')
-plt.xticks(rotation=90)
-plt.grid(axis='y', linestyle='--', alpha=0.7)
-plt.show()
-
 #Frekuensi Review Yang Bermanfaat----------------------------------------------
 plt.figure(figsize=(10, 6))
 data['helpful_vote'].hist(bins=range(0, data['helpful_vote'].max() + 1), color='purple')
@@ -118,6 +85,7 @@ plt.xlabel('Jumlah Vote Berguna')
 plt.ylabel('Jumlah Ulasan')
 plt.grid(axis='y', linestyle='--', alpha=0.7)
 plt.show()
+
 
 
 #Distribusi Pembelian Yang Terverifikasi-------------------------------------

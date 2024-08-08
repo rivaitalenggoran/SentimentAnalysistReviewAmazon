@@ -1,6 +1,10 @@
 import pandas as pd
 import regex as re
-
+from textblob import TextBlob
+import string
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+from bs4 import BeautifulSoup
 
 #persiapkan data
 input_file = 'Dataset//Electronics.jsonl'
@@ -12,15 +16,38 @@ num_objects = 10000
 # Membaca file JSONL dan mengambil 10000 objek pertama
 data = pd.read_json(input_file, lines=True, nrows=num_objects)
 
+#Set StopWord dari NLTK
+stop_words = set(stopwords.words('english'))
 
+# Inisialisasi WordNetLemmatizer
+lemmatizer = WordNetLemmatizer()
 
-#LowerCase title, Menghapus karakter tidak penting
+'''
+Praprocessing :
+- Hapus HTML parsing (<br /> untuk text review)
+- LowerCase title
+- Hapus Angka
+- Menghapus karakter tidak penting
+- Tokenisasi
+- Hapus StopWord
+'''
+
 title_data = data['title']
 new_title_data = []
 for title in title_data:
+    #lower title
     lower_title = title.lower()
-    new_title = re.sub(r"[..!|?|&|,|-|/|\|:|’|'|(|)|%|#|$|..]", '', lower_title)
-    new_title_data.append(new_title)
+    #hapus angka
+    number_title = re.sub(r'\d+', '', lower_title)
+    #hapus karakter
+    character_title = number_title.translate(str.maketrans('', '', string.punctuation))
+    #Tokenisasi
+    token_title = character_title.split()
+    #hapus Stopword
+    stopword_title = [word for word in token_title if word not in stop_words]
+    #Lemmatisasi
+    lematisasi_title = [lemmatizer.lemmatize(stopwords) for stopwords in stopword_title]
+    new_title_data.append(lematisasi_title)
 
 
 
@@ -28,10 +55,23 @@ for title in title_data:
 text_data = data['text']
 new_text_data = []
 for text in text_data:
-    new_text = re.sub(r"<br\s*/?>", '', text)
-    lower_text = new_text.lower()
-    new_text = re.sub(r"[..!|?|&|,|-|/|\|:|’|'|(|)|%|#|$|..]", '', lower_text)
-    new_text_data.append(new_text)
+    #Hapus tag HTML menggunakan HTML parsing
+    soup = BeautifulSoup(text, 'html.parser')
+    newtext = soup.get_text()
+    #lower title
+    lower_title = newtext.lower()
+    #hapus angka
+    number_text = re.sub(r'\d+', '', lower_title)
+    #hapus karakter
+    character_text = number_text.translate(str.maketrans('', '', string.punctuation))
+    #Tokenisasi
+    token_text = character_text.split()
+    #hapus Stopword
+    stopword_text = [word for word in token_text if word not in stop_words]
+    #Lemmatisasi
+    lematisasi_text = [lemmatizer.lemmatize(stopwords) for stopwords in stopword_text]
+    new_text_data.append(lematisasi_text)
+
 
 
 new_title_df = pd.Series(new_title_data)

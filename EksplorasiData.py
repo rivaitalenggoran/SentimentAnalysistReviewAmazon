@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
-
+import regex as re
 
 file = "Dataset//Electronics_sampled.csv"
 data = pd.read_csv(file)
@@ -9,6 +9,7 @@ data = pd.read_csv(file)
 
 #Distribusi Rating-----------------------------------------------------------
 rating_counts = data['rating'].value_counts().sort_index()
+
 plt.figure(figsize=(10, 6))
 rating_counts.plot(kind='bar', color='skyblue')
 plt.title('Distribusi Rating')
@@ -44,7 +45,7 @@ plt.show()
 
 
 #Analisa Teks Judul Review Yang Sering Muncul------------------------------------------
-text = ' '.join(data['title'].dropna())
+text = re.sub(r"'", "", ' '.join(data['title']))
 wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text)
 plt.figure(figsize=(12, 6))
 plt.imshow(wordcloud, interpolation='bilinear')
@@ -55,7 +56,7 @@ plt.show()
 
 
 #Analisa Teks Di Review Yang Sering Muncul------------------------------------------
-text = ' '.join(data['text'].dropna())
+text = re.sub(r"'", "", ' '.join(data['text']))
 wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text)
 plt.figure(figsize=(12, 6))
 plt.imshow(wordcloud, interpolation='bilinear')

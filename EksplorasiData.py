@@ -21,12 +21,6 @@ plt.show()
 
 
 
-#Rata-Rata Rating-----------------------------------------------------------
-average_rating = data['rating'].mean()
-print(f'Rata-rata Rating: {average_rating:.2f}')
-
-
-
 #Tampilkan Rating Berdasarkan Waktu------------------------------------------
 data['timestamp'] = pd.to_datetime(data['timestamp'])
 

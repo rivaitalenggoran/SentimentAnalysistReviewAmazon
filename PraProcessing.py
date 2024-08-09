@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 #persiapkan data
 input_file = 'Dataset//Electronics.jsonl'
 output_file = 'Dataset//Electronics_sampled.csv'
-num_objects = 10000
+num_objects = 1000
 
 
 
@@ -30,6 +30,7 @@ Praprocessing :
 - Menghapus karakter tidak penting
 - Tokenisasi
 - Hapus StopWord
+- Ambil Tahun-Bulan-Tanggal dari timestamp
 '''
 
 title_data = data['title']
@@ -73,6 +74,29 @@ for text in text_data:
     new_text_data.append(lematisasi_text)
 
 
+#Ambil Tahun,Bulan,Tanggal
+data['timestamp'] = pd.to_datetime(data['timestamp'])
+data['tahun'] = data['timestamp'].dt.year
+Tahun = [tahun for tahun in data['tahun']]
+data['bulan'] = data['timestamp'].dt.month
+Bulan= [bulan for bulan in data['bulan']]
+data['tanggal'] = data['timestamp'].dt.day
+Tanggal = [tanggal for tanggal in data['tanggal']]
+
+newdata = {
+    'year' :[],
+    'month' :[],
+    'day' :[]
+}
+
+for year,month,day in zip(Tahun,Bulan,Tanggal):
+    newdata['year'].append(year)
+    newdata['month'].append(month)
+    newdata['day'].append(day)
+
+newtimestamp = pd.DataFrame(newdata)
+
+data['new_timestamp'] = pd.to_datetime(newtimestamp[['year', 'month', 'day']])
 
 new_title_df = pd.Series(new_title_data)
 data['title'] = new_title_df
@@ -80,7 +104,8 @@ new_text_df = pd.Series(new_text_data)
 data['text'] = new_text_df
 
 
-concat_df = pd.concat([data['rating'],data['title'],data['text'],data['images'],data['asin'],data['parent_asin'],data['user_id'],data['timestamp'],data['helpful_vote'],data['verified_purchase']],axis=1)
+concat_df = pd.concat([data['rating'],data['title'],data['text'],data['images'],data['asin'],data['parent_asin'],data['user_id'],data['timestamp'],data['helpful_vote'],data['verified_purchase'],data['new_timestamp']],axis=1)
 new_df = pd.DataFrame(concat_df)
 # menyimpan data dalam format CSV
 new_df.to_csv(output_file, index=False, encoding='utf-8')
+print('berhasil disimpan!')

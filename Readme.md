@@ -68,7 +68,7 @@
 
   - **Distribusi Gambar Per-Ulasan             :** Hasil visualisasi menunjukkan distribusi gambar pada penjualan berada di antara angka 1 dan 0 di hampir seribu penjualan
                                               ,menunjukkan bahwa pengguna cenderung tidak memakai gambar dalam review
-  - 
+
   - **Distribusi Jumlah Vote Berguna per Ulasan:** Visualisasi yang ditampilkan menunjukkan bahwa distribusi vote berada pada rentang 0-50 dengan jumlah ulasan antara 0-120an
                                                     , menunjukkan jumlah vote berguna yang ada hanya sedikit
 - **Rekomendasi**

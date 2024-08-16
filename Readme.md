@@ -59,7 +59,7 @@
   - **Distribusi Rating                 :** Dari hasil pengolaan data, menunjukkan bahwa rating terdistribusi lebih
                                              mengarah kepada rating tinggi(4-5), ini menunjukkan kepuasan konsumen terhadap 
                                              pembelian elektronik yang ada di Amazon
-  - **Rata-Rata Rating berdasarkan Wakti :** Hasil analisa menunjukkan adanya peningkatan rating dari tahun ke tahun, menunjukkan bahwa
+  - **Rata-Rata Rating berdasarkan Waktu :** Hasil analisa menunjukkan adanya peningkatan rating dari tahun ke tahun, menunjukkan bahwa
                                              baik produk kategori elektronik maupun mekanisme pembelian selalu dikembangkan untuk memudahkan 
                                              pengguna dalam mencari dan membeli produk elektronil
   - **Teks Yang sering muncul             :** Hasil visualisasi menunjukkan bahwa teks yang sering muncul kearah 'great, good, five star,love', menunjukkan
